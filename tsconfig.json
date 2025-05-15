@@ -1,0 +1,65 @@
+// {
+//   "compilerOptions": {
+//     "target": "es6",
+//     "module": "commonjs",
+//     // "rootDir": "./src",/
+//     "outDir": "./dist",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true
+//   },
+//   "include": ["src/**/*.ts"],
+//   "exclude": ["node_modules"]
+// }
+
+
+
+// {
+//   "compilerOptions": {
+//     "target": "es6",
+//     "module": "commonjs",
+//     "outDir": "./dist",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "typeRoots": ["./types", "./node_modules/@types"]
+//   },
+//   "include": ["src", "types"]
+// }
+
+
+
+// {
+//   "compilerOptions": {
+//     "target": "es6",
+//     "module": "commonjs",
+//     // "rootDir": "./src",
+//     "outDir": "./dist",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "typeRoots": ["./types", "./node_modules/@types"]
+//   },
+//   "include": ["src", "types", "routes", "models", "migrations", "middleware", "config", "components"],
+//   "exclude": ["dist", "node_modules"]
+// }
+
+
+
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    // "rootDir": "./src",/
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  // "include": ["src/**/*.ts"],
+  // "exclude": ["node_modules"]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "knex-objectionjs-with-nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "cross-env NODE_ENV=development npx nodemon dist/server.js",
+    "start": "cross-env NODE_ENV=development npx tsx --watch server.ts",
+    "migrate:create": "cross-env NODE_ENV=development npx knex migrate:make --knexfile knexfile.ts -x ts",
+    "migrate:dev": "cross-env NODE_ENV=development node_modules/knex/bin/cli.js migrate:latest",
+    "migrate:rollback": "NODE_ENV=development node_modules/knex/bin/cli.js migrate:rollback",
+    "migrate:up": "NODE_ENV=development node_modules/knex/bin/cli.js migrate:up"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/jsonwebtoken": "^9.0.9",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "nodemon": "^3.1.10",
+    "objection": "^3.1.5",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.17",
+    "cross-env": "^7.0.3",
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
