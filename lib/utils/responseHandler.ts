@@ -11,7 +11,10 @@ export const successResponse = (
     .json({ success: true, statusCode, message, data });
 };
 
-
-export const errorResponse = (res:Response,message:string,statusCode=500)=>{
-  return res.status(statusCode).json({success:false,statusCode,message})
-}
+export const errorResponse = (
+  res: Response,
+  message: string,
+  statusCode = 500
+) => {
+  return res.status(statusCode).json({ success: false, statusCode, message });
+};
