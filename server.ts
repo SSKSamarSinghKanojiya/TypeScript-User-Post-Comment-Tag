@@ -14,6 +14,7 @@ import postRoutes from "./routes/postRoutes";
 import commentRoutes from "./routes/commentRoutes";
 import tagRoutes from "./routes/tagRoutes";
 import postTagRoutes from "./routes/postTagRoutes";
+import { errorHandler } from "./middleware/errorHandler";
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -35,6 +36,9 @@ dotenv.config();
 
 // Bind the configured Knex instance to Objection.js's base Model
 Model.knex(BaseKnex);
+
+// Global error handler
+app.use(errorHandler);
 
 // Define API routes
 app.use("/api/user", userRoutes);           // Handles user-related endpoints

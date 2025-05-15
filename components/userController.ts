@@ -3,6 +3,7 @@ import User from "../models/users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { errorResponse, successResponse } from "../lib/utils/responseHandler";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -17,7 +18,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     // Check if user already exists
     const existingUser = await User.query().findOne({ email });
     if (existingUser) {
-      res.status(400).json({ message: "User already exists" });
+      // res.status(400).json({ message: "User already exists" });
+      errorResponse(res, "User already exists", 400);
       return;
     }
 
@@ -32,14 +34,25 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     });
 
     // Send response without password
-    res.status(201).json({
-      message: "User registered successfully",
-      user: {
+    // res.status(201).json({
+    //   message: "User registered successfully",
+    //   user: {
+    //     id: user.id,
+    //     name: user.name,
+    //     email: user.email,
+    //   },
+    // });
+
+    successResponse(
+      res,
+      "User registered successfully",
+      {
         id: user.id,
         name: user.name,
         email: user.email,
       },
-    });
+      201
+    );
   } catch (err: any) {
     console.error("Register error:", err);
     res.status(500).json({ message: "Server Error", error: err.message });
@@ -60,11 +73,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     if (req.body.password) {
-  console.log("Original password:", req.body.password);
-  req.body.password = await bcrypt.hash(req.body.password, 10);
-  console.log("Hashed password:", req.body.password);
-}
-
+      console.log("Original password:", req.body.password);
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+      console.log("Hashed password:", req.body.password);
+    }
 
     // Compare entered password with stored hash
     const isMatch = await bcrypt.compare(password, user.password);
@@ -74,9 +86,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Create JWT payload
-    const payload : any = { id: user.id, email: user.email };
-    const secretKey : any = process.env.JWT_SECRET_KEY;
-    const expiresIn : any = process.env.JWT_EXPIRES_IN;
+    const payload: any = { id: user.id, email: user.email };
+    const secretKey: any = process.env.JWT_SECRET_KEY;
+    const expiresIn: any = process.env.JWT_EXPIRES_IN;
 
     if (!secretKey || !expiresIn) {
       throw new Error("JWT_SECRET_KEY or JWT_EXPIRES_IN not defined in .env");
@@ -119,7 +131,10 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 /**
  * Get all users (admin or debugging purpose)
  */
-export const getAllUser = async (req: Request, res: Response): Promise<void> => {
+export const getAllUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const users = await User.query().select("id", "name", "email");
 
@@ -135,7 +150,10 @@ export const getAllUser = async (req: Request, res: Response): Promise<void> => 
 /**
  * Get a single user by ID
  */
-export const getUserById = async (req: Request, res: Response): Promise<void> => {
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const userId = req.params.id;
 
@@ -188,7 +206,10 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
 //     res.status(500).json({ message: "Server error", error: err.message });
 //   }
 // };
-export const updateUser = async (req: Request, res: Response): Promise<void> => {
+export const updateUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const userId = req.params.id;
     if (!userId) {
@@ -200,7 +221,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
     const allowedFields = ["name", "email", "password"];
     const updates: any = {};
 
-    allowedFields.forEach(field => {
+    allowedFields.forEach((field) => {
       if (req.body[field]) updates[field] = req.body[field];
     });
 
@@ -216,7 +237,9 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    res.status(200).json({ message: "User updated successfully", user: updatedUser });
+    res
+      .status(200)
+      .json({ message: "User updated successfully", user: updatedUser });
   } catch (err: any) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
@@ -225,7 +248,10 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
 /**
  * Delete a user by ID
  */
-export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+export const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const userId = req.params.id;
 
